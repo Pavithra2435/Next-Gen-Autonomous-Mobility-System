@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart RC Car Control</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+            background-color: #f4f4f4;
+        }
+
+        button {
+            margin: 10px;
+            padding: 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .modes {
+            margin-top: 20px;
+        }
+
+        .slider {
+            width: 300px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Smart RC Car Control Panel</h2>
+
+<form method="POST" action="/move">
+
+    <button name="action" value="forward">↑ Forward</button><br>
+
+    <button name="action" value="left">← Left</button>
+    <button name="action" value="stop">Stop</button>
+    <button name="action" value="right">→ Right</button><br>
+
+    <button name="action" value="backward">↓ Backward</button><br>
+
+    <div class="modes">
+        <button name="action" value="manual">Manual Mode</button>
+        <button name="action" value="object">Object Avoidance</button>
+        <button name="action" value="lane">Lane Following</button>
+    </div>
+
+    <div class="slider">
+        <label>Motor Speed: </label>
+        <input type="range" min="10" max="100" value="60"
+               oninput="updateSpeed(this.value)">
+        <span id="speedValue">60</span>%
+    </div>
+
+</form>
+
+<script>
+function updateSpeed(val) {
+    document.getElementById('speedValue').innerText = val;
+    fetch('/set_speed/' + val);
+}
+</script>
+
+</body>
+</html>
